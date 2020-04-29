@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "sourceMap": true,
+        "target": "ES2015",
+        "allowUmdGlobalAccess": true,
+        "strict": true,
+        "moduleResolution": "Node",
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true
+    }
+}
