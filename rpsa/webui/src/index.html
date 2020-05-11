@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Project</title>
+	
+	<script defer src="https://cdn.plot.ly/plotly-1.53.0.min.js"></script>
+	<script defer src="./index.ts"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./index.css">
+
+	<template id="x-term-table-row">
+		<tr>
+			<td class="term"></td>
+			<td class="popularity"></td>
+			<td class="sentiment"></td>
+		</tr>
+	</template>
+	<template id="x-key-terms-card">
+		<div class="card key-terms">
+			<h3 class="card__context">Key Stems</h3>
+			<h2 class="card__heading"></h2>
+			<table class="key-terms-table">
+				<thead>
+					<tr>
+						<th>Stem</th>
+						<th>Popularity</th>
+						<th>Sentiment</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</template>
+</head>
+
+<body>
+	<header>
+		<h1 id="title">Realtime Candidate Sentiment</h1>
+	</header>
+	<main>
+		<div class="card card--wide">
+			<h3 class="card__context">Live Sentiment</h3>
+			<div id="sentiment-chart" class="card__content"></div>
+		</div>
+	</main>
+	<footer>
+		<div id="footer-wrap">
+			<ul id="footer-links">
+				<li><a href="https://github.com/snugfox/rpsa/">GitHub</a></li>
+			</ul>
+			<div id="footer-memo">Made for Information Retrieval @ WPI</div>
+		</div>
+	</footer>
+</body>
+</html>
