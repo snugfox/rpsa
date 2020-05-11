@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import flask
 from datetime import datetime
 from threading import Lock, Timer, Thread
-import sched
+from pathlib import Path
 from urllib import parse
 
 from api import RPSA
@@ -13,13 +13,17 @@ APP_NAME = "rpsa"
 app = flask.Flask(APP_NAME)
 
 
-@app.route("/")
-def index():
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path: str):
     if app.config["webui_addr"] != "":
         webui_addr = app.config["webui_addr"]
         webui_query = parse.urlencode({"api_origin": flask.request.host_url})
         return flask.redirect(f"{webui_addr}?{webui_query}")
-    return flask.render_template("webui/index.html")
+    print(">", path)
+    if path == "":
+        path = "index.html"
+    return flask.send_from_directory(str(Path(__file__).parent.joinpath("webui")), path)
 
 
 @app.route("/api/candidates")
@@ -53,7 +57,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--dev", default=False, action="store_true")
     parser.add_argument("--model", type=str, required=True)
-    parser.add_argument("--webui-addr", type=str)
+    parser.add_argument("--webui-addr", type=str, default="")
     parser.add_argument("--sample-size", type=int, default=100)
     parser.add_argument("--candidate", type=str, required=True, action="append")
     parser.add_argument("--interval", type=int, default=60)
@@ -63,4 +67,9 @@ if __name__ == "__main__":
     Thread(target=lambda: api.run(float(args.interval)), daemon=True).start()
 
     app.config.update({"webui_addr": args.webui_addr, "api": api})
-    app.run(debug=args.dev)
+    if args.dev:
+        app.run(debug=args.dev)
+    else:
+        from gevent.pywsgi import WSGIServer
+        server = WSGIServer(("", 5000), app)
+        server.serve_forever()

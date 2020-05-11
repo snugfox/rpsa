@@ -86,4 +86,4 @@ if __name__ == "__main__":
         texts.append(tweet)
         sentiment.append(-1)
     cl.train(texts, np.array(sentiment))
-    cl.save("tfidf-svc.pkl")
+    cl.save("model/tfidf-svc.pkl")
