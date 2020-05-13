@@ -1,13 +1,14 @@
 import pandas as pd
 import tweepy
+import os
 from typing import List
 
 
 def fetch_sample(screen_names: List[str], size: int = 100):
-    consumer_key = "eVXXvtiI6zOFyh28fqlBaLhFG"
-    consumer_secret = "kp5GKGF3leHagSo8J0eLVUICsLfaI76MzjGwkjtLMrPM0jK8EL"
-    access_token = "905838785778380801-xE6cTpYspRPpNCNz7dhR7iE6akfuSkn"
-    access_token_secret = "aSF81IzlsesueB9S0BncfMOCU4CnKJ8XzgyNG2WToQOFp"
+    consumer_key = os.environ["TWITTER_CONSUMER_KEY"]
+    consumer_secret = os.environ["TWITTER_CONSUMER_SECRET"]
+    access_token = os.environ["TWITTER_ACCESS_TOKEN"]
+    access_token_secret = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
